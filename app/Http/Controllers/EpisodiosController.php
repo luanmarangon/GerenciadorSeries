@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Episodio;
+use App\Serie;
+use App\Services\RemovedorDeSerie;
 use App\Temporada;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -14,13 +16,19 @@ class EpisodiosController extends Controller
         $this->middleware('auth');
     }
 
-    public function index(Temporada $temporada, Request $request)
+    public function index(Serie $serie, Temporada $temporada, Request $request)
     {
         $episodios = $temporada->episodios;
         $temporadaId = $temporada->id;
+        $temporadaNome = $temporada->numero;
+        $serie = Serie::find($temporada->serie_id);
+
+        $serieNome = $serie->nome;
+        $serieId = $serie->id;
         $mensagem = $request->session()->get('mensagem');
 
-        return view('episodios.index', compact('episodios', 'temporadaId', 'mensagem'));
+        return view('episodios.index', compact('episodios', 'temporadaId', 'temporadaNome',
+            'serieNome', 'serieId', 'mensagem'));
     }
 
     public function assistir(Temporada $temporada, Request $request)
@@ -59,18 +67,10 @@ class EpisodiosController extends Controller
 
     public function destroy(Episodio $episodio, Request $request)
     {
-
         $epNumero = $episodio->numero;
-        $epId = $episodio->id;
 
-        dd($episodio);
-//        var_dump(Episodio::destroy($epId));
-//
-//        $epId->delete();
-
-        Episodio::find($epId);
-
-
+//        $episodios = $removedorDeSerie->removerEpisodios($episodio);
+        Episodio::destroy($episodio->id);
         $request->session()->flash('mensagem', "O episódio $epNumero, excluído com sucesso!");
 
         return redirect()->back();

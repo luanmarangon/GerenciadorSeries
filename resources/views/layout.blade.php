@@ -5,10 +5,15 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
     <!-- CSS only -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <!-- DataTable -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+
+
     <title>Controle de Séries</title>
 </head>
 <body>
@@ -16,10 +21,15 @@
     <div class="container-fluid">
         @auth
             <div class="d-flex">
-                <a class="navbar-brand" href="{{ route('listar_series') }}">
+                <a class="navbar-brand" href="{{ route('home') }}">
                     <img src="{{URL::asset('/img/home.png')}}" alt="" width="30px" height="30px"
                          class="d-inline-block align-text-top  ms-3">
                     Home
+                </a>
+                <a class="navbar-brand" href="{{ route('listar_series') }}">
+                    <img src="{{URL::asset('/img/home.png')}}" alt="" width="30px" height="30px"
+                         class="d-inline-block align-text-top  ms-3">
+                    Séries
                 </a>
                 <a class="navbar-brand" href="{{ route('userAll') }}">
                     <img src="{{URL::asset('/img/users.png')}}" alt="" width="30px" height="30px"
@@ -50,15 +60,38 @@
 
     @yield('conteudo')
 </div>
+
 <!-- JavaScript Bundle with Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-        crossorigin="anonymous"></script>
-<script>
-    function goBack() {
-        window.history.back()
-    }
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
+
 </script>
+{{--<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>--}}
+
+{{--<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>--}}
+{{--<script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>--}}
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+
+
+<script>
+    $(document).ready(function () {
+        $('#tabela').DataTable({
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json"
+            },
+            "lengthMenu": [ 8, 16, 24]
+        });
+    });
+</script>
+
+
+
+{{--<script>--}}
+{{--    function goBack() {--}}
+{{--        window.history.back()--}}
+{{--    }--}}
+{{--</script>--}}
 </body>
 </html>
 

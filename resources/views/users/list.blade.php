@@ -11,7 +11,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
-                <table class="table">
+                <table id="tabela" class="table table-hover">
                     <thead>
                     <tr>
                         <th scope="col">Avatar</th>

@@ -25,13 +25,20 @@ Route::post('/series/remover/{id}', 'SeriesController@destroy');
 Route::post('/series/{id}/editaNome', 'SeriesController@editaNome');
 
 
-Route::get('/series/{serieId}/temporadas', 'TemporadasController@index');
+Route::get('/series/{serieId}/temporadas', 'TemporadasController@index')
+                                            ->name('listar_temporadas');
+Route::post('/series/{serie}/temporadas/new', 'TemporadasController@add');
+Route::post('/series/{serie}/temporadas/destroyAll', 'TemporadasController@destroyAll');
 
 Route::get('temporadas/{temporada}/episodios', 'EpisodiosController@index')
                                             ->name('episodios_index');
+
+Route::get('/temporadas/destroy/{temporada}', 'TemporadasController@destroy');
+
 Route::post('temporadas/{temporada}/episodios/assistir', 'EpisodiosController@assistir');
 Route::get('temporadas/{temporada}/episodios/new', 'EpisodiosController@add');
-Route::post('/episodios/{episodio}/destroy', 'EpisodiosController@destroy');
+//Route::get('/episodios/{temporada}/destroy/{episodio}', 'EpisodiosController@destroy');
+Route::get('/episodios/destroy/{episodio}', 'EpisodiosController@destroy');
 
 
 Auth::routes();

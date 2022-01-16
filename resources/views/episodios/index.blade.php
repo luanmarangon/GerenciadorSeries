@@ -1,69 +1,94 @@
 @extends('layout')
 
 @section('titulo')
-    Episodios
+    Episodios da {{$temporadaNome}}ª Temporada da {{$serieNome}}
 @endsection
 
 @section('conteudo')
 
     @include('mensagem', ['mensagem' => $mensagem])
 
-    <a href="/temporadas/{{ $temporadaId }}/episodios/new" class="btn btn-dark mb-2 mt-2">+ Episódio</a>
-    <form action="/temporadas/{{ $temporadaId }}/episodios/assistir" method="post" class="mt-2">
-        @csrf
-        <ul class="list-group">
-        @foreach( $episodios as $episodio )
-            <!-- Button trigger modal -->
+    <div class="d-flex justify-content-between">
+        <a href="/temporadas/{{ $temporadaId }}/episodios/new" class="btn btn-dark mb-2 mt-2">+ Episódio</a>
+        <a href="/series/{{$serieId}}/temporadas" class=" mb-2 mt-2">Voltar</a>
+    </div>
 
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    Episódio {{ $episodio->numero }}
+    <table id="tabela" class="table table-hover">
+        <thead>
+        <th>#</th>
+        <th>Episodios</th>
+        <th>Assistidos</th>
 
-                    <span class="d-flex">
-                        <form action="/episodios/{{ $episodio->id }}/destroy" method="post">
-                            @csrf
-                        <button type="button" class="btn btn-danger btn-sm me-1 " data-bs-toggle="modal"
-                                data-bs-target="#exampleModal">
-                        <i class="bi bi-recycle"></i>
-                    </button>
-                        </form>
-                    <input type="checkbox" name="episodios[]" value="{{ $episodio->id }}"
-                            {{ $episodio->assistido ? 'checked' : '' }}>
-                    </span>
+        </thead>
 
-                </li>
-            @endforeach
-        </ul>
-        <button class="btn btn-primary mt-2 me-2">Salvar</button>
+        <tbody>
+        <form action="/temporadas/{{ $temporadaId }}/episodios/assistir" method="post" class="mt-2">
+            @csrf
+            <ul class="list-group">
+
+                @foreach( $episodios as $episodio )
+                    <tr>
+                        <td><a href="/episodios/destroy/{{$episodio->id}}" class="btn btn-danger btn-sm me-2"><i
+                                    class="bi bi-recycle"></i></a></td>
+                        <td>Episódio {{ $episodio->numero }}</td>
+                        <td><input type="checkbox" name="episodios[]" value="{{ $episodio->id }}"
+                                {{ $episodio->assistido ? 'checked' : '' }}></td>
+                    </tr>
+
+                @endforeach
+            </ul>
+        </tbody>
+    </table>
+    <button class="btn btn-primary mt-2 me-2">Salvar</button>
+    {{--        <a href="/episodios/destroy/{{$episodio->id}}" class="btn btn-danger btn-sm me-2"><i class="bi bi-recycle"></i></a>--}}
+
     </form>
 
+{{--    @extends('layout')--}}
 
+{{--@section('titulo')--}}
+{{--    Episodios da {{$temporadaNome}}ª Temporada da {{$serieNome}}--}}
+{{--@endsection--}}
 
-    {{--            Inicio do Modal--}}
-{{--    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">--}}
-{{--        <div class="modal-dialog">--}}
-{{--            <div class="modal-content">--}}
-{{--                <div class="modal-header">--}}
-{{--                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>--}}
-{{--                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>--}}
-{{--                </div>--}}
-{{--                <form action="/episodios/{{ $episodio->id }}/destroy" method="post">--}}
-{{--                    @csrf--}}
-{{--                    <div class="modal-body">--}}
-{{--                        <?php--}}
-{{--                        var_dump($episodio->numero);--}}
-{{--                        ?>--}}
+{{--@section('conteudo')--}}
 
-{{--                        Episódio {{ $episodio}}--}}
-{{--                    </div>--}}
-{{--                    <div class="modal-footer">--}}
-{{--                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"--}}
-{{--                                onclick="goBack()">Cancelar--}}
-{{--                        </button>--}}
-{{--                        <button type="submit" class="btn btn-danger">Excluir</button>--}}
-{{--                    </div>--}}
-{{--                </form>--}}
-{{--            </div>--}}
-{{--        </div>--}}
+{{--    @include('mensagem', ['mensagem' => $mensagem])--}}
+
+{{--    <div class="d-flex justify-content-between">--}}
+{{--        <a href="/temporadas/{{ $temporadaId }}/episodios/new" class="btn btn-dark mb-2 mt-2">+ Episódio</a>--}}
+{{--        <a href="/series/{{$serieId}}/temporadas" class=" mb-2 mt-2">Voltar</a>--}}
 {{--    </div>--}}
-    {{--            Final do Modal--}}
+{{--    <form action="/temporadas/{{ $temporadaId }}/episodios/assistir" method="post" class="mt-2">--}}
+{{--        @csrf--}}
+{{--        <ul class="list-group">--}}
+
+{{--            @foreach( $episodios as $episodio )--}}
+{{--                <li class="list-group-item d-flex justify-content-between align-items-center">--}}
+{{--                    <div class="d-flex">--}}
+{{--                        <a href="/episodios/destroy/{{$episodio->id}}" class="btn btn-danger btn-sm me-2"><i--}}
+{{--                                class="bi bi-recycle"></i></a>--}}
+{{--                        Episódio {{ $episodio->numero }}--}}
+
+{{--                    </div>--}}
+
+{{--                    <span class="d-flex">--}}
+{{--                    <input type="checkbox" name="episodios[]" value="{{ $episodio->id }}"--}}
+{{--                            {{ $episodio->assistido ? 'checked' : '' }}>--}}
+{{--                    </span>--}}
+{{--                </li>--}}
+
+{{--            @endforeach--}}
+{{--        </ul>--}}
+{{--        <button class="btn btn-primary mt-2 me-2">Salvar</button>--}}
+{{--        --}}{{--        <a href="/episodios/destroy/{{$episodio->id}}" class="btn btn-danger btn-sm me-2"><i class="bi bi-recycle"></i></a>--}}
+
+{{--    </form>--}}
+
+
+{{--@endsection--}}
+
+
+
+
+
 @endsection
